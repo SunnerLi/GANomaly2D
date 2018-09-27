@@ -5,7 +5,7 @@
 [![Packagist](https://img.shields.io/badge/Python-3.5.0-blue.svg)]()
 [![Packagist](https://img.shields.io/badge/Torchvision_sunner-18.9.15-green.svg)]()
 
-![](https://i.imgur.com/2OHMmqu.png)
+![](https://i.imgur.com/GKG41cD.png)
 
 Abstraction
 ---
@@ -43,11 +43,11 @@ python3 demo.py --demo dataset/abnormal/ --batch_size 1 --r 2
 
 Result
 ---
-![](https://i.imgur.com/7G1ELGr.png)
+![](https://github.com/SunnerLi/GANomaly2D/blob/master/img/training_result.png)
 
 The above image shows the training result. The left figure is the input normal image, the middle figure is the reconstruct image by `G_E` and `G_D`, and the right figure is the anomaly score map. After the iterations of training, the most area of anomaly score map is reduce to 0. Only the score of some patch are high since the region might hard to keep the latent feature consistent.    
 
-![](https://i.imgur.com/14MUPhk.png)
+![](https://github.com/SunnerLi/GANomaly2D/blob/master/img/demo.png)
 
 The above image illustrates the demo result. The inputs are the image in abnormal domain. As you can see, through the response of anomaly score map at the bottom region is high, some high response at bird region can be found. The **GANomaly2D** can somehow to capture the abnormal region of the bird and give the high score.    
 
