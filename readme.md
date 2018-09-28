@@ -5,7 +5,7 @@
 [![Packagist](https://img.shields.io/badge/Python-3.5.0-blue.svg)]()
 [![Packagist](https://img.shields.io/badge/Torchvision_sunner-18.9.15-green.svg)]()
 
-![](https://i.imgur.com/GKG41cD.png)
+![](https://github.com/SunnerLi/GANomaly2D/blob/master/img/structure.png)
 
 Abstraction
 ---
