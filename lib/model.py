@@ -15,6 +15,12 @@ import os
 
 class GANomaly2D(nn.Module):
     def __init__(self, r = 1, device = 'cpu'):
+        """
+            Constructor
+
+            Args:   r       (Int)   - The ratio to devide the channel
+                    device  (Str)   - The symbol of computing device. The candidate is ['cpu', 'cuda']
+        """
         super().__init__()
         # Store the variable
         self.r = r
@@ -55,6 +61,12 @@ class GANomaly2D(nn.Module):
             raise Exception("Unknown direction: {}".format(direction))
 
     def forward(self, x):
+        """
+            forward process
+
+            Arg:    x   (torch.Tensor)  - The tensor you want to deal with
+            Ret:    The latend representation and reconstructed latend representation
+        """
         self.x = x.to(self.device)
         self.z = self.G_E(self.x)
         self.x_ = self.G_D(self.z)
@@ -62,6 +74,9 @@ class GANomaly2D(nn.Module):
         return self.z, self.z_
 
     def backward(self):
+        """
+            Update the parameters
+        """
         # Update discriminator
         self.optim_D.zero_grad()
         true_pred = self.f(self.x)
@@ -80,7 +95,17 @@ class GANomaly2D(nn.Module):
         self.optim_G.step()
 
     def getLoss(self):
+        """
+            Return the loss value
+
+            Ret:    The generator loss and discriminator loss
+        """
         return round(self.loss_G.item(), 5), round(self.loss_D.item(), 5)
 
     def getImg(self):
+        """
+            Return the images
+
+            Ret:    The input image and reconstructed image
+        """
         return self.x, self.x_

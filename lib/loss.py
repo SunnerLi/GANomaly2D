@@ -1,6 +1,11 @@
 import torch.nn as nn
 import torch
 
+"""
+    This script defines the loss function
+    The GAN loss is borrowed from CycleGAN
+"""
+
 class GANLoss(nn.Module):
     def __init__(self, use_lsgan=True, target_real_label=1.0, target_fake_label=0.0):
         super(GANLoss, self).__init__()

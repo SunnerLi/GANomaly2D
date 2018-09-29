@@ -9,28 +9,19 @@ import torch
 import cv2
 
 def visualizeAnomalyMap(img, z, z_):
-    # # Get the normalized anamoly score map
-    # s_map = torch.abs(z - z_)
-    # s_map = torch.mean(s_map, 1)
-    # min_v = torch.min(s_map)
-    # max_v = torch.max(s_map)
-    
-    # # TODO: it cannot substract [8, 512, 30, 40] - [8, 30, 40]
+    """
+        Generate the normalized anomaly score map
+        According to the definition of normalized anomaly score map:
 
-    # s_map = (s_map - min_v) / (max_v - min_v)
-    # s_map = torch.unsqueeze(s_map, 0)                                   # CHW -> 1CHW (for F.interpolate)
-    # s_map = F.interpolate(s_map, size = (img.size(-2), img.size(-1)))   # Expand the size as same as image
-    # s_map = torch.cat([s_map, s_map, s_map], 1).permute(0, 2, 3, 1)     # 1HW -> HW3
-    # s_map = s_map.cpu().numpy()[0]
-    # return s_map
+        s' = (s - MIN(s, [B, H, W])) / (MAX(s, [B, H, W]) - MIN(s, [B, H, W]))
+        MIN: The minimun operation toward the given several axis
+        MAX: The maximun operation toward the given several axis
 
-    # # Get the normalized anamoly score map
-    # s_map = torch.abs(z - z_)
-    # min_v, _ = torch.min(s_map, 0)
-    # max_v, _ = torch.max(s_map, 0)
-    # min_v = min_v.unsqueeze(0)
-    # max_v = max_v.unsqueeze(0)
-
+        Arg:    img (torch.Tensor)  - The tensor to determine the original size
+                z   (torch.Tensor)  - The latend representation (tensor shape)
+                z_  (torch.Tensor)  - The reconstructed latend representation (tensor shape)
+        Ret:    The anomaly score map
+    """
     # Get the min and max value through batch, height and width
     s_map = torch.abs(z - z_).permute(0, 2, 3, 1)
     b, h, w, c = s_map.size()
@@ -53,18 +44,34 @@ def visualizeAnomalyMap(img, z, z_):
     s_map = s_map.cpu().numpy()[0]
     return s_map
 
-
 def visualizeEncoderDecoder(img, img_, z, z_):
+    """
+        Visualize the rendered result after adversarial auto-encoder
+        The anamoly score map will are also concatenated in the last
+
+        Arg:    img     (torch.Tensor)  - The input image
+                img_    (torch.Tensor)  - The reconstructed image
+                z       (torch.Tensor)  - The latend representation (tensor shape)
+                z_      (torch.Tensor)  - The reconstructed latend representation (tensor shape)
+    """
     s_map = visualizeAnomalyMap(img, z, z_)
     img = sunnerTransforms.asImg(img)[0, :, :, ::-1]
     img_ = sunnerTransforms.asImg(img_)[0, :, :, ::-1]
     result = np.hstack((img, img_, s_map * 255.0))
     result = result.astype(np.uint8)    
     cv2.imshow('training visualization', result)
-    cv2.imwrite("training_result.png", result)
     cv2.waitKey(10)
 
 def visualizeAnomalyImage(img, img_, z, z_):
+    """
+        Visualize the testing result and render the level of abnormality
+        The anamoly score map will are also concatenated in the last
+
+        Arg:    img     (torch.Tensor)  - The input image
+                img_    (torch.Tensor)  - The reconstructed image
+                z       (torch.Tensor)  - The latend representation (tensor shape)
+                z_      (torch.Tensor)  - The reconstructed latend representation (tensor shape)
+    """
     s_map = visualizeAnomalyMap(img, z, z_)
 
     # Form the shown image

@@ -3,6 +3,12 @@ import argparse
 import torch
 import os
 
+"""
+    This script defines the usage of each parameters
+
+    Author: SunnerLi
+"""
+
 def parse_args(phase = 'train'):
     """
         Parse the argument for training procedure

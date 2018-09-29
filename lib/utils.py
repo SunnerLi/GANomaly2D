@@ -5,11 +5,12 @@
 """
 
 def INFO(string):
-    print("[ GANomaly ] %s" % (string))
+    print("[ GANomaly2D ] %s" % (string))
 
 def showParameters(args_dict):
     """
         Print the parameters setting line by line
+        
         Arg:    args_dict   - The dict object which is transferred from argparse Namespace object
     """
     INFO("==================== Parameters ====================")
