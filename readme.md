@@ -3,7 +3,7 @@
 
 [![Packagist](https://img.shields.io/badge/Pytorch-0.4.1-red.svg)]()
 [![Packagist](https://img.shields.io/badge/Python-3.5.0-blue.svg)]()
-[![Packagist](https://img.shields.io/badge/Torchvision_sunner-18.9.15-green.svg)]()
+[![Packagist](https://img.shields.io/badge/Torchvision_sunner-19.4.15-green.svg)]()
 
 ![](https://github.com/SunnerLi/GANomaly2D/blob/master/img/structure.png)
 

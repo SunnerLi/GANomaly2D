@@ -28,12 +28,12 @@ def demo(args):
     loader = sunnerData.DataLoader(
         dataset = sunnerData.ImageDataset(
             root = [[args.demo]], 
-            transform = transforms.Compose([
+            transforms = transforms.Compose([
                 sunnerTransforms.Resize(output_size = (args.H, args.W)),
                 sunnerTransforms.ToTensor(),
                 sunnerTransforms.ToFloat(),
-                sunnerTransforms.Transpose(),
-                sunnerTransforms.Normalize(),
+                # sunnerTransforms.Transpose(),
+                sunnerTransforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
             ])
         ), batch_size = args.batch_size, shuffle = True, num_workers = 2
     )
